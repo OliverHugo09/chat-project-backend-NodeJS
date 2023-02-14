@@ -1,15 +1,25 @@
 import App from "./config/config.js";
 import { Server } from "socket.io";
 
-const port = process.env.PORT || process.env.APP_PORT;
-const io = new Server(3001);
+const io = new Server(App.http,{
+    cors: {
+      origin: '*',
+    }
+  });
 
-// Websockets
 io.on("connection", (socket) => {
 
-    console.log(`New connection`);
+    console.log(`New connection ${socket.id}`);
 
+    socket.on('chat', function(data){
+        io.sockets.emit('chat',data);
+    });
+    socket.on('typing', function(data){
+        io.sockets.emit('typing',data)
+    });
 });
+
+const port = process.env.PORT || process.env.APP_PORT;
 
 // Start server
 App.http.listen(port, () => console.log(`API escuchando en puerto: ${port}`));

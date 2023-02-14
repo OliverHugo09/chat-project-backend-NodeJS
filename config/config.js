@@ -32,7 +32,7 @@ class App {
             })
         )
         this.app.use(express.json())
-        this.app.use(cors({origin: '*'}))
+        this.app.use(cors({origin: 'http://localhost:4200',methods: ["GET", "POST"]}))
     }
 
     async initDatabase(){
