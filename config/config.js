@@ -2,16 +2,19 @@ import express from 'express';
 import http from 'http';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { Routes } from '../routes/routes.js'
+import { Routes } from '../routes/routes.js';
 import { Database } from './database.js';
+import { SocketIo } from '../socket/socket.io.js';
 
 dotenv.config();
 
 class App {
-    app = express.application
-    http = null;
+    app = express.application;
     routes = new Routes();
     db = new Database();
+    socket = new SocketIo();
+    http = null;
+    io = null;
 
     constructor(){
         this.initializeApp()
@@ -23,6 +26,7 @@ class App {
         this.http = http.createServer(this.app);
         await this.initDatabase();
         this.routes.initRoutes(this.app);
+        this.socket.startSocket(this.http)
     }
 
     config(){
@@ -32,7 +36,8 @@ class App {
             })
         )
         this.app.use(express.json())
-        this.app.use(cors({origin: 'http://localhost:4200',methods: ["GET", "POST"]}))
+        this.app.use(cors({origin: '*', methods: ["GET", "POST"]
+        }))
     }
 
     async initDatabase(){

@@ -1,5 +1,5 @@
 import App from "./config/config.js";
-/* import { Server } from "socket.io";
+import { Server } from "socket.io";
 
 const io = new Server(App.http,{
     cors: {
@@ -17,9 +17,4 @@ io.on("connection", (socket) => {
     socket.on('typing', function(data){
         io.sockets.emit('typing',data)
     });
-}); */
-
-const port = process.env.PORT || process.env.APP_PORT;
-
-// Start server
-App.http.listen(port, () => console.log(`API escuchando en puerto: ${port}`));
+});
