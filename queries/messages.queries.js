@@ -1,10 +1,10 @@
-import { ContactModel } from '../models/contact.model.js';
+import { MessageModel } from '../models/messages.model.js';
 
-class contactQueries {
+class messageQueries {
 
     async store(newObject){
         try{
-            const query = ContactModel.create(newObject);
+            const query = MessageModel.create(newObject);
             if(query){
                 return {ok: true, data:query};
             }
@@ -16,7 +16,7 @@ class contactQueries {
 
     async find() {
         try{
-            const query = await ContactModel.findAll();
+            const query = await MessageModel.findAll();
             if(query){
                 return{ok: true, data: query};
             }
@@ -28,7 +28,7 @@ class contactQueries {
 
     async findByPk(id) {
         try {
-            const query = await ContactModel.findByPk(id);
+            const query = await MessageModel.findByPk(id,);
             if(query){
                 return {ok: true, data: query};
             }else{
@@ -40,12 +40,10 @@ class contactQueries {
         }
     }
 
-    async update(id,title,urlmap,descripcion) {
+    async update(id, content) {
         try {
-            const query = await ContactModel.update({
-                title: title,
-                urlmap: urlmap,
-                descripcion: descripcion
+            const query = await MessageModel.update({
+                content: content,
             }, {
                 where:{
                     id : id
@@ -64,9 +62,9 @@ class contactQueries {
 
     async delete(id) {
         try {
-            const query = await ContactModel.destroy({
+            const query = await MessageModel.destroy({
                 where: {
-                  id: id
+                    id : id
                 }
               })
             if(query){
@@ -82,4 +80,4 @@ class contactQueries {
 
 }
 
-export const ContactQueries = new contactQueries();
+export const MessageQueries = new messageQueries();

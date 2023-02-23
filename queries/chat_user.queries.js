@@ -1,10 +1,10 @@
-import { MediaModel } from '../models/media.model.js';
+import { ChatUserModel } from "../models/chat_user.model.js";
 
-class mediaQueries {
+class chatUserQueries {
 
     async store(newObject){
         try{
-            const query = MediaModel.create(newObject);
+            const query = ChatUserModel.create(newObject);
             if(query){
                 return {ok: true, data:query};
             }
@@ -16,7 +16,7 @@ class mediaQueries {
 
     async find() {
         try{
-            const query = await MediaModel.findAll();
+            const query = await ChatUserModel.findAll();
             if(query){
                 return{ok: true, data: query};
             }
@@ -28,7 +28,7 @@ class mediaQueries {
 
     async findByPk(id) {
         try {
-            const query = await MediaModel.findByPk(id);
+            const query = await ChatUserModel.findByPk(id,);
             if(query){
                 return {ok: true, data: query};
             }else{
@@ -40,13 +40,10 @@ class mediaQueries {
         }
     }
 
-    async update(id, name, urlimg, urlsite, mediaId) {
+    async update(id, chat_name) {
         try {
-            const query = await MediaModel.update({
-                name: name,
-                urlimg: urlimg,
-                urlsite: urlsite,
-                mediaId: mediaId
+            const query = await ChatUserModel.update({
+                chat_name: chat_name
             }, {
                 where:{
                     id : id
@@ -65,9 +62,9 @@ class mediaQueries {
 
     async delete(id) {
         try {
-            const query = await MediaModel.destroy({
+            const query = await ChatUserModel.destroy({
                 where: {
-                  id: id
+                    id : id
                 }
               })
             if(query){
@@ -83,4 +80,4 @@ class mediaQueries {
 
 }
 
-export const MediaQueries = new mediaQueries();
+export const ChatUserQueries = new chatUserQueries();

@@ -11,7 +11,8 @@ export const DatabaseConfig = new Sequelize({
     password: process.env.DB_PASS,
     dialect: 'mysql',
     port: +process.env.DB_PORT,
-    logging: false, 
+    logging: false,
+    timezone: "-05:00",
     pool:{
         max: 5,
         min: 5,

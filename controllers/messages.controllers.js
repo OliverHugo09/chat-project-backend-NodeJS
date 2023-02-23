@@ -1,15 +1,11 @@
-import { request, response } from 'express';
-import { MediaQueries } from '../queries/media.queries.js';
-import { Payload } from '../helpers/payload.js';
+import { MessageQueries } from "../queries/messages.queries.js";
 
-class MediaController {
-
-    static payload = new Payload();
+class MessageController {
 
     async create(req,res) {
         const body = req.body;
         const condition = body.condition;
-        const query = await MediaQueries.store(body,condition);
+        const query = await MessageQueries.store(body,condition);
         if(query.ok){
             return res.status(200).json({ok: true, data: query.data});
         }else{
@@ -17,22 +13,11 @@ class MediaController {
         }
     }
 
-    async find(req, res) {
-        const body = req.body;
-        const condition = body.condition;
-        const query = await MediaQueries.find(condition);
-        if(query.ok) {
-            return res.status(200).json(query.data);
-        } else {
-            return res.status(403).json({ok: false, message: 'Error on process request'});
-        }
-    }
-
     async findByPk(req,res) {
         const body = req.body;
         const condition = body.condition;
-        const {id} = req.params;
-        const query = await MediaQueries.findByPk(id,condition);
+        const {message_id} = req.params;
+        const query = await MessageQueries.findByPk(message_id,condition);
         if(query.ok){
             return res.status(200).json(query.data);
         }else{
@@ -43,10 +28,10 @@ class MediaController {
     async update(req,res) {
         const body = req.body;
         const condition = body.condition;
-        const {name,urlimg,urlsite,mediaId} = req.body;
-        const {id} = req.params;
-        const query = await MediaQueries.update(id,name,urlimg,urlsite,mediaId,condition);
-        const queryres = await MediaQueries.findByPk(id,condition);
+        const {} = req.body;
+        const {message_id} = req.params;
+        const query = await MessageQueries.update(message_id,chat_name,condition);
+        const queryres = await MessageQueries.findByPk(message_id,condition);
         if(query.ok){
             return res.status(200).json({queryres});
         }else{
@@ -57,8 +42,8 @@ class MediaController {
     async delete(req,res) {
         const body = req.body;
         const condition = body.condition;
-        const {id} = req.params;
-        const query = await MediaQueries.delete(id,condition);
+        const {message_id} = req.params;
+        const query = await MessageQueries.delete(message_id,condition);
         if(query.ok){
             return res.status(200).json({ok: true, data: query.data});
         }else{
@@ -66,5 +51,15 @@ class MediaController {
         }
     }
 
+    async find(req, res) {
+        const body = req.body;
+        const condition = body.condition;
+        const query = await MessageQueries.find(condition);
+        if(query.ok) {
+            return res.status(200).json(query.data);
+        } else {
+            return res.status(403).json({ok: false, message: 'Error on process request'});
+        }
+    }
 }
-export const mediaController = new MediaController();
+export const messageController = new MessageController();

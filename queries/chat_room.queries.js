@@ -1,10 +1,10 @@
-import { ExperienceModel } from '../models/experience.model.js';
+import { ChatRoomModel } from "../models/chat_room.model.js";
 
-class experienceQueries {
+class chatRoomQueries {
 
     async store(newObject){
         try{
-            const query = ExperienceModel.create(newObject);
+            const query = ChatRoomModel.create(newObject);
             if(query){
                 return {ok: true, data:query};
             }
@@ -16,7 +16,7 @@ class experienceQueries {
 
     async find() {
         try{
-            const query = await ExperienceModel.findAll();
+            const query = await ChatRoomModel.findAll({include:'messages'});
             if(query){
                 return{ok: true, data: query};
             }
@@ -28,7 +28,7 @@ class experienceQueries {
 
     async findByPk(id) {
         try {
-            const query = await ExperienceModel.findByPk(id);
+            const query = await ChatRoomModel.findByPk(id,{include:"messages"});
             if(query){
                 return {ok: true, data: query};
             }else{
@@ -40,17 +40,14 @@ class experienceQueries {
         }
     }
 
-    async update(id,urlimg,company,period,descripcion) {
+    async update(chat_id, chat_name) {
         try {
-            const query = await ExperienceModel.update({
-
-                urlimg: urlimg,
-                company: company,
-                period: period,
-                descripcion: descripcion
+            const query = await ChatRoomModel.update({
+                chat_name: chat_name,
+                include:"chat_users"
             }, {
                 where:{
-                    id : id
+                    chat_id : chat_id
                 }
             })
             if(query){
@@ -64,11 +61,11 @@ class experienceQueries {
         }
     }
 
-    async delete(id) {
+    async delete(chat_id) {
         try {
-            const query = await ExperienceModel.destroy({
+            const query = await ChatRoomModel.destroy({
                 where: {
-                  id: id
+                    chat_id : chat_id
                 }
               })
             if(query){
@@ -84,4 +81,4 @@ class experienceQueries {
 
 }
 
-export const ExperienceQueries = new experienceQueries();
+export const ChatRoomQueries = new chatRoomQueries();
