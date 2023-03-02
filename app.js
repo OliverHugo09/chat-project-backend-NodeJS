@@ -12,12 +12,17 @@ io.on("connection", (socket) => {
     console.log(`New connection ${socket.id}`);
 
     socket.on('chat', function(data){
-        io.sockets.emit('chat',data);
+        socket.emit('chat',data);
     });
 
     // Broadcast when a user typing
-    socket.on('typing', function(data){
-        socket.broadcast.emit('typing',data);
+    socket.on('typing', () => {
+      socket.broadcast.emit('typing', socket.id);
+    });
+
+    // Broadcast when a user stop typing
+    socket.on('stopTyping', () => {
+      socket.broadcast.emit('stopTyping', socket.id);
     });
 
     // Room chat
@@ -28,6 +33,13 @@ io.on("connection", (socket) => {
 
   socket.on('message', (data) => {
       io.in(data.room).emit('new message', {user: data.user, message: data.message});
+  });
+
+  // Messages
+  socket.on('sendMessage2', (messageInfo)=>{
+    console.log(messageInfo.messageType);
+    socket.broadcast.emit('receiveMessage', messageInfo);
+    console.log(messageInfo.messageType);
   });
 
 });
