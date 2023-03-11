@@ -4,6 +4,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { Routes } from '../routes/routes.js'
 import { Database } from './database.js';
+import { SocketIo } from '../socket/socket.io.js'
+import { Server  } from 'socket.io';
 
 dotenv.config();
 
@@ -12,6 +14,8 @@ class App {
     http = null;
     routes = new Routes();
     db = new Database();
+    socket = new SocketIo();
+    io = null;
 
     constructor(){
         this.initializeApp()
@@ -23,6 +27,7 @@ class App {
         this.http = http.createServer(this.app);
         await this.initDatabase();
         this.routes.initRoutes(this.app);
+        this.socket.startSocket(this.http)
     }
 
     config(){
