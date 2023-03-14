@@ -1,4 +1,5 @@
 import express from "express";
+import { uploadImage } from '../middlewares/multer.middleware.js';
 
 // Controllers imports
 import { userController } from '../controllers/user.controllers.js';
@@ -17,6 +18,9 @@ export class Routes {
         app.get('/', (req, res) => {
             res.send('hola mundo');
         });
+
+        //multer
+        app.post('/users/:userId/avatar', uploadImage, userController.uploadUserAvatar);
 
         //Usuarios (Listar, Crear, Mostrar, Update, Delete)
         //app.route('/users', userController.find).get([validateToken.validateJWT], userController.find);
