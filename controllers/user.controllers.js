@@ -99,6 +99,7 @@ class UserController {
                 try {
                     const token = UserController.payload.createToken(query);
                     return res.status(200).json({
+                        "id": query.id,
                         query,
                         token
                     }
