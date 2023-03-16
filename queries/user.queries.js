@@ -13,7 +13,7 @@ class userQueries {
         } catch (error) {
           throw new Error(error.message);
         }
-    };
+    }
 
     async store(user){
         try{

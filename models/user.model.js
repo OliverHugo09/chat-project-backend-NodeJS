@@ -20,7 +20,7 @@ UserModel.init({
         allowNull: false
     },
     socket_id:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING(500),
         allowNull: true
     },
     online:{

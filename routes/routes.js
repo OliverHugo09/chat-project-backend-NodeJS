@@ -34,8 +34,9 @@ export class Routes {
         app.post('/login', userController.login);
 
         //ChatRoom (Listar, Crear, Mostrar, Update, Delete)
+        app.post('/chatrooms', chatRoomController.create);
         app.get('/chatrooms', chatRoomController.find);
-        app.route('/chatrooms', chatRoomController.create).post([validateToken.validateJWT], chatRoomController.create);
+        //app.route('/chatrooms', chatRoomController.create).post([validateToken.validateJWT], chatRoomController.create);
         app.route('/chatrooms/:id', chatRoomController.findByPk).get([validateToken.validateJWT], chatRoomController.findByPk);
         app.route('/chatrooms/:id', chatRoomController.update).put([validateToken.validateJWT], chatRoomController.update);
         app.route('/chatrooms/:id', chatRoomController.delete).delete([validateToken.validateJWT], chatRoomController.delete);

@@ -10,9 +10,19 @@ ChatRoomModel.init({
         comment: "null",
         autoIncrement: true
     },
-    chat_name:{
-        type: DataTypes.STRING (25),
-        allowNull: true,
+    id_usuario_1: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id'
+        }
+    },
+    id_usuario_2: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id'
+        }
     },
 },  {
     sequelize: DatabaseConfig,
