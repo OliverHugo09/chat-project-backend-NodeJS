@@ -54,6 +54,7 @@ export class Routes {
         app.route('/messages/:id', messageController.findByPk).get([validateToken.validateJWT], messageController.findByPk);
         app.route('/messages/:id', messageController.update).put([validateToken.validateJWT], messageController.update);
         app.route('/messages/:id', messageController.delete).delete([validateToken.validateJWT], messageController.delete);
+        app.route('/messages/getbychatroom', messageController.getMessagesByChatroomId).post([validateToken.validateJWT], messageController.getMessagesByChatroomId);
 
         
 

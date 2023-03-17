@@ -36,15 +36,6 @@ export class SocketIo {
                 socket.broadcast.emit('receiveMessage', messageInfo);
             });
 
-            // Messages
-/*             socket.on('sendMessage2', async (messageInfo) => {
-                const recipientId = chatroom.user1_id === userLocalId ? chatroom.user2_id : chatroom.user1_id;
-                const recipient = await UserModel.findByPk(recipientId);
-                if (recipient) {
-                    io.to(recipient.socket_id).emit('receiveMessage', messageInfo);
-                }
-            }); */
-
 
 
         });

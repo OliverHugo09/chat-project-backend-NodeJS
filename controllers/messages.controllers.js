@@ -1,6 +1,19 @@
+import { MessageModel } from "../models/messages.model.js";
 import { MessageQueries } from "../queries/messages.queries.js";
 
 class MessageController {
+
+    async getMessagesByChatroomId(req, res) {
+        const body = req.body; 
+        const query = await MessageQueries.findAll({
+            chatRoomId: body.chatRoomId,
+        });
+        if(query) {
+            return res.status(200).json(query);
+        } else {
+            return res.status(403).json({ok: false, message: 'Error on process request'});
+        }
+    }
 
     async create(req,res) {
         const body = req.body;
