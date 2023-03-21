@@ -16,7 +16,7 @@ class messageQueries {
 
     async store(newObject){
         try{
-            const query = MessageModel.create(newObject);
+            const query = await MessageModel.create(newObject);
             if(query){
                 return {ok: true, data:query};
             }

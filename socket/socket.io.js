@@ -1,6 +1,8 @@
-import { Server } from 'socket.io';
+/* import { Server } from 'socket.io';
 import { Op } from 'sequelize';
 import { UserModel } from '../models/user.model.js';
+import { MessageModel } from '../models/messages.model.js';
+
 const io = new Server();
 
 export class SocketIo {
@@ -19,7 +21,7 @@ export class SocketIo {
             const userId = socket.handshake.query.userId;
 
             // Update the user's socket_id in the database
-            await UserModel.update({ socket_id: socket.id }, { where: { id: { [Op.eq]: userId } } });
+            await UserModel.update({ socket_id: socket.id, online: 1 }, { where: { id: { [Op.eq]: userId } } });
 
             // Broadcast when a user typing
             socket.on('typing', () => {
@@ -35,9 +37,22 @@ export class SocketIo {
             socket.on('sendMessage2', (messageInfo)=>{
                 socket.broadcast.emit('receiveMessage', messageInfo);
             });
+            
+            //take userId and socketId from user
+            socket.on("addUser", (userId) => {
+                addUser(userId, socket.id);
+                io.emit("getUsers", users);
+            });
 
-
-
+            //send and get message
+            socket.on("sendMessage", ({ senderId, receiverId, text }) => {
+                const user = getUser(receiverId);
+                io.to(user.socketId).emit("getMessage", {
+                senderId,
+                text,
+                });
+            });
+ 
         });
     }
-}
+} */
