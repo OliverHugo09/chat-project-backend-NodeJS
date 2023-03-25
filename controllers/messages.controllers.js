@@ -1,5 +1,6 @@
 import { MessageModel } from "../models/messages.model.js";
 import { MessageQueries } from "../queries/messages.queries.js";
+import { UserModel } from "../models/user.model.js";
 import app from '../config/config.js'
 
 class MessageController {
@@ -7,7 +8,7 @@ class MessageController {
     async getMessagesByChatroomId(req, res) {
         try {
           const chatRoomId = req.params.chatRoomId;
-          const query = await MessageQueries.findAll({ chatRoomId });
+          const query = await MessageQueries.findAll({ chatRoomId});
           if (query) {
             return res.status(200).json(query);
           } else {

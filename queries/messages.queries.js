@@ -1,4 +1,5 @@
 import { MessageModel } from '../models/messages.model.js';
+import { UserModel } from '../models/user.model.js';
 
 class messageQueries {
 
