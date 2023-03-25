@@ -1,6 +1,5 @@
 import { MessageModel } from "../models/messages.model.js";
 import { MessageQueries } from "../queries/messages.queries.js";
-import { UserModel } from "../models/user.model.js";
 import app from '../config/config.js'
 
 class MessageController {
