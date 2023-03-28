@@ -20,7 +20,7 @@ UserModel.init({
         allowNull: false
     },
     socket_id:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING(500),
         allowNull: true
     },
     online:{
@@ -28,7 +28,7 @@ UserModel.init({
         allowNull:true
     },
     avatar:{
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING(1000),
         allowNull:true
     },
     isAuthenticated:{

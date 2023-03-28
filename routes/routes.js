@@ -1,4 +1,5 @@
 import express from "express";
+import { uploadImage } from '../middlewares/multer.middleware.js';
 
 // Controllers imports
 import { userController } from '../controllers/user.controllers.js';
@@ -18,6 +19,9 @@ export class Routes {
             res.send('hola mundo');
         });
 
+        //multer
+        app.post('/users/:userId/avatar', uploadImage, userController.uploadUserAvatar);
+
         //Usuarios (Listar, Crear, Mostrar, Update, Delete)
         //app.route('/users', userController.find).get([validateToken.validateJWT], userController.find);
         app.post('/users', userController.create);
@@ -30,8 +34,9 @@ export class Routes {
         app.post('/login', userController.login);
 
         //ChatRoom (Listar, Crear, Mostrar, Update, Delete)
+        app.post('/chatrooms', chatRoomController.create);
         app.get('/chatrooms', chatRoomController.find);
-        app.route('/chatrooms', chatRoomController.create).post([validateToken.validateJWT], chatRoomController.create);
+        //app.route('/chatrooms', chatRoomController.create).post([validateToken.validateJWT], chatRoomController.create);
         app.route('/chatrooms/:id', chatRoomController.findByPk).get([validateToken.validateJWT], chatRoomController.findByPk);
         app.route('/chatrooms/:id', chatRoomController.update).put([validateToken.validateJWT], chatRoomController.update);
         app.route('/chatrooms/:id', chatRoomController.delete).delete([validateToken.validateJWT], chatRoomController.delete);
@@ -49,6 +54,7 @@ export class Routes {
         app.route('/messages/:id', messageController.findByPk).get([validateToken.validateJWT], messageController.findByPk);
         app.route('/messages/:id', messageController.update).put([validateToken.validateJWT], messageController.update);
         app.route('/messages/:id', messageController.delete).delete([validateToken.validateJWT], messageController.delete);
+        app.route('/messages/getbychatroom/:chatRoomId', messageController.getMessagesByChatroomId).get([validateToken.validateJWT], messageController.getMessagesByChatroomId);
 
         
 

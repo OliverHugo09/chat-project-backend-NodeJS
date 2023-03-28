@@ -14,6 +14,21 @@ class UserController {
         });
     }
 
+
+    async uploadUserAvatar(req, res, next) {
+        try {
+        const { userId } = req.params;
+        const file = req.file;
+
+        const url = file.path; // Obtiene la URL generada por Cloudinary
+
+        await UserQueries.updateUserAvatar(userId, url);
+        res.status(200).json({ url });
+        } catch (error) {
+        next(error);
+        }
+    }
+
     async create(req,res) {
         const body = req.body;
         const condition = body.condition;
@@ -99,6 +114,7 @@ class UserController {
                 try {
                     const token = UserController.payload.createToken(query);
                     return res.status(200).json({
+                        "id": query.id,
                         query,
                         token
                     }

@@ -26,8 +26,8 @@ ChatUserModel.init({
 
 
 
-ChatRoomModel.belongsToMany(UserModel, {as:"chats", through: "chat_user" });
-UserModel.belongsToMany(ChatRoomModel, { through: "chat_user" });
-UserModel.hasOne(MessageModel, { as: "sender", foreignKey: "sender_id"})
+//ChatRoomModel.belongsToMany(UserModel, {as:"chats", through: "chat_user" });
+//UserModel.belongsToMany(ChatRoomModel, { through: "chat_user" });
+//UserModel.hasOne(MessageModel, { as: "sender", foreignKey: "sender_id"})
 //ChatUserModel.hasOne(MessageModel, { as: "receiver", foreignKey: "receiver_id"})
-ChatRoomModel.hasMany(MessageModel, { as: "messages", foreignKey: "chat_room_id"})
+//ChatRoomModel.hasMany(MessageModel, { as: "messages", foreignKey: "chat_room_id"})

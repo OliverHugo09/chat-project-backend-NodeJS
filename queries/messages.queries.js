@@ -2,9 +2,21 @@ import { MessageModel } from '../models/messages.model.js';
 
 class messageQueries {
 
+    async findAll(condition) {
+        try {
+            const query = await MessageModel.findAll({where:{chatRoomId:condition.chatRoomId}});
+            if(query){
+                return query;
+            }
+        } catch (e) {
+            console.log('Error al ejecutar query', e);
+            return {ok: false, data: null};
+        }
+    }
+
     async store(newObject){
         try{
-            const query = MessageModel.create(newObject);
+            const query = await MessageModel.create(newObject);
             if(query){
                 return {ok: true, data:query};
             }

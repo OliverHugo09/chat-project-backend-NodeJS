@@ -1,6 +1,25 @@
 import { ChatRoomModel } from "../models/chat_room.model.js";
+import { Op } from "sequelize";
 
 class chatRoomQueries {
+
+    async getChatRoomByUsers(id_usuario_1, id_usuario_2) {
+        const chatroom = await ChatRoomModel.findOne({
+          where: {
+            [Op.or]: [
+              {
+                id_usuario_1: id_usuario_1,
+                id_usuario_2: id_usuario_2,
+              },
+              {
+                id_usuario_1: id_usuario_2,
+                id_usuario_2: id_usuario_1,
+              },
+            ],
+          },
+        });
+        return chatroom;
+    }
 
     async store(newObject){
         try{
@@ -16,7 +35,7 @@ class chatRoomQueries {
 
     async find() {
         try{
-            const query = await ChatRoomModel.findAll({include:'messages'});
+            const query = await ChatRoomModel.findAll();
             if(query){
                 return{ok: true, data: query};
             }

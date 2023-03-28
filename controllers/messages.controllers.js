@@ -1,12 +1,30 @@
+import { MessageModel } from "../models/messages.model.js";
 import { MessageQueries } from "../queries/messages.queries.js";
+import app from '../config/config.js'
 
 class MessageController {
+
+    async getMessagesByChatroomId(req, res) {
+        try {
+          const chatRoomId = req.params.chatRoomId;
+          const query = await MessageQueries.findAll({ chatRoomId});
+          if (query) {
+            return res.status(200).json(query);
+          } else {
+            return res.status(403).json({ ok: false, message: 'Error on process request' });
+          }
+        } catch (e) {
+          console.log('Error al ejecutar query', e);
+          return res.status(500).json({ ok: false, message: 'Error on process request' });
+        }
+      }
 
     async create(req,res) {
         const body = req.body;
         const condition = body.condition;
         const query = await MessageQueries.store(body,condition);
         if(query.ok){
+            app.io.emit('newMessage', query.data);
             return res.status(200).json({ok: true, data: query.data});
         }else{
             return res.status(403).json({ok: false, message: 'Error on process request'});

@@ -3,6 +3,18 @@ import bcrypt from 'bcrypt';
 
 class userQueries {
 
+    async updateUserAvatar(userId, avatarUrl) {
+        try {
+          const updatedUser = await UserModel.update(
+            { avatar: avatarUrl },
+            { where: { id: userId } }
+          );
+          return updatedUser;
+        } catch (error) {
+          throw new Error(error.message);
+        }
+    }
+
     async store(user){
         try{
             user.password = await bcrypt.hash(user.password,8);
