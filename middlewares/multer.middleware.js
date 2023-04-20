@@ -1,9 +1,10 @@
 import multer from 'multer';
 import { v2 as cloudinary } from 'cloudinary';
+const cloudinaryInstance = cloudinary;
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
 
 // Configura Cloudinary
-cloudinary.config({
+cloudinaryInstance.config({
   cloud_name: 'djau2etka',
   api_key: '556928129542566',
   api_secret: 'KMcNKoI-sLjVEmWYJvCWxuObV28',
@@ -11,7 +12,7 @@ cloudinary.config({
 
 // Crea una instancia de CloudinaryStorage
 const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
+  cloudinary: cloudinaryInstance,
   params: {
     folder: 'AVATARS_FOLDER',
     allowed_formats: ['jpg', 'jpeg', 'png'],
